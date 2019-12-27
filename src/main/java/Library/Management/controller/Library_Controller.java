@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -41,14 +42,33 @@ public class Library_Controller {
 
     //  Using Author Name ----> Which Users have
     @RequestMapping(value = "/findauthor/{str}", method = RequestMethod.GET)
-    public List<Issue> getAllauth(@PathVariable String str)
-    {
+    public List<Issue> getAllauth(@PathVariable String str) {
 
         List<Issue> B = serb.checkingfor(str);
 
-        return B;
+
+        if (!B.get(0).isStatus())
+        {
+            return B;
+        }
+        else
+            {
+            return Collections.emptyList();
+        }
+
     }
+
+    @RequestMapping(value = "/authorissued/{str}", method = RequestMethod.GET)
+    public List<Issue> checkAuthStats(@PathVariable String str) {
+
+        List<Issue>  C =  serb.checkStatus(str);
+
+        return C;
+    }
+
 }
+
+
 
 
 
