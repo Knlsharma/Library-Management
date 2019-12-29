@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+--
+-- Host: localhost    Database: library
+-- ------------------------------------------------------
+-- Server version	8.0.18
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `master_user`
+--
+
+DROP TABLE IF EXISTS `master_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `master_user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `creation_date` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `email_id` varchar(255) NOT NULL,
+  `u_name` varchar(255) NOT NULL,
+  `ph_no` bigint(20) DEFAULT NULL,
+  `updation_date` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `master_user`
+--
+
+LOCK TABLES `master_user` WRITE;
+/*!40000 ALTER TABLE `master_user` DISABLE KEYS */;
+INSERT INTO `master_user` VALUES (1,'2019-12-29 16:25:45.068','knlsharma678@gmail.com','knl1',45678,'2019-12-29 16:25:45.068'),(2,'2019-12-29 16:26:29.728','gdhj@hj.com','raj12',567987654,'2019-12-29 16:26:29.728'),(3,'2019-12-29 16:27:03.297','shaam@jh.com','shaam223',45678,'2019-12-29 16:27:03.297'),(4,'2019-12-29 16:27:39.870','dfghj@fgh.com','kajal',456789,'2019-12-29 16:27:39.870'),(5,'2019-12-29 16:31:58.625','456789@','gunjan',4567890,'2019-12-29 16:31:58.625');
+/*!40000 ALTER TABLE `master_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-12-29 22:21:20
