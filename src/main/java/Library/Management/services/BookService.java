@@ -138,4 +138,15 @@ public class BookService {
          //  return b;
 
     }
+
+    /** NEEDS EDITING IN BOOK SERVICE **/
+
+    public List<Issue> checkStatus(String str) {
+
+        List<Books> b1 = repob.findByAname(str);
+      //  int n = b1.size();
+
+         return b1.get(0).getId();
+
+    }
 }
