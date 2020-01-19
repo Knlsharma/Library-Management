@@ -66,7 +66,7 @@ public class IssueController {
         return seri.deleteAIssue(id);
     }
 
-  // @RequestMapping(value = "/getisbn/{id}", method = RequestMethod.GET)
+   @RequestMapping(value = "/getisbn/{id}", method = RequestMethod.GET)
     public List<Issue> getAllIssue( int id)
     {
 

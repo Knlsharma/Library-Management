@@ -130,8 +130,8 @@ public class BookService {
 
 
 
-        System.out.println(b);
-        System.out.println(k);
+     //   System.out.println(b);
+      //  System.out.println(k);
 
      return ic.getAllIssue(k);
 
@@ -139,14 +139,23 @@ public class BookService {
 
     }
 
-    /** NEEDS EDITING IN BOOK SERVICE **/
+    /** NEEDS EDITING IN BOOK SERVICE  **/
 
     public List<Issue> checkStatus(String str) {
 
         List<Books> b1 = repob.findByAname(str);
-      //  int n = b1.size();
+      int n = b1.size();
+        System.out.println(n);
 
-         return b1.get(0).getId();
+       int k1 =  b1.get(0).getId();
+         return ic.getAllIssue(k1);
 
     }
+
+
+    public List<Books> findbySubjectdata(String str)
+    {
+       return repob.findBySname(str);
+    }
+
 }

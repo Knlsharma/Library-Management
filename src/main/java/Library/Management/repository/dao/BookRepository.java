@@ -12,7 +12,7 @@ public interface BookRepository extends CrudRepository<Books, Integer>
 {
 
         List<Books> findByAname(String aname);
-
+        List<Books> findBySname(String sname);
 
 
 }
