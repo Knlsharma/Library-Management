@@ -14,11 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.*;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
+import org.apache.commons.collections.MultiMap;
+import org.apache.commons.collections.map.MultiValueMap;
+
+
 
 @RestController
 @RequestMapping("/library/task")
-public class Library_Controller<bg> {
+public class Library_Controller<bg>
+{
 
     @Autowired
     private UserService seru;
@@ -31,6 +42,25 @@ public class Library_Controller<bg> {
 
     @Autowired
     private MappingService serm;
+
+    HashMap<String, ArrayList> hashMap = new HashMap<String, ArrayList>();
+
+    private void addValues(String key, String value)
+    {
+        ArrayList tempList = null;
+
+        if (hashMap.containsKey(key)) {
+            tempList = hashMap.get(key);
+            if(tempList == null)
+                tempList = new ArrayList();
+            tempList.add(value);
+        } else {
+            tempList = new ArrayList();
+            tempList.add(value);
+        }
+        hashMap.put(key,tempList);
+    }
+
 
     public Library_Controller(UserService seru, BookService serb, IssueService seri, MappingService serm) {
         this.seru = seru;
@@ -76,25 +106,25 @@ public class Library_Controller<bg> {
 
 
     @RequestMapping(value = "/authorissued/{str}", method = RequestMethod.GET)
-    public TreeMap<String, Object> checkAuthStats(@PathVariable String str) {
+    public Map<String, ArrayList> checkAuthStats(@PathVariable String str)
+    {
 
         List<Issue>  C =  serb.checkingfor(str);
 
         System.out.println(C);
         System.out.println(C.size());
 
-        TreeMap<String, Object> tree_auth = new TreeMap<String , Object>();
+
 
         for(int i = 0 ; i < C.size() ; i++)
         {
-            tree_auth.put("isbn_no" , C.get(i).getMap().getIs_no());
-            tree_auth.put("status" ,  C.get(i).isStatus());
+            addValues("isbn_no", String.valueOf(C.get(i).getMap().getIs_no()));
+            addValues("status",  String.valueOf(C.get(i).isStatus()));
         }
 
-         System.out.println(tree_auth);
+         System.out.println(hashMap);
 
-          return  tree_auth;
-
+          return hashMap;
 
     }
 
@@ -121,6 +151,7 @@ public class Library_Controller<bg> {
 
 
     }
+
 
 }
 
