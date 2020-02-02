@@ -78,11 +78,6 @@
 	</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/collections -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>collections</artifactId>
-			<version>3.2.0</version>
-		</dependency>
 
 
 		<!-- EHCache Core APIs -->
@@ -124,21 +119,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>24.1.1-jre</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>24.1.1-jre</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.collections</groupId>
-			<artifactId>google-collections</artifactId>
-			<version>1.0</version>
-		</dependency>
+
 	</dependencies>
 
 	<!-- dependencies end -->

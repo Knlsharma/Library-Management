@@ -1,6 +1,7 @@
 package Library.Management.services;
 
 import Library.Management.entity.Issue;
+import Library.Management.entity.User;
 import Library.Management.entity.mapping;
 import Library.Management.repository.dao.IssueRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -132,5 +133,14 @@ public class IssueService
 
         return repoi.findByMap(m);
 
+    }
+
+
+    public List<Issue> getOnlyUser(int id)
+    {
+        User u1 = new User();
+        u1.setId(id);
+
+        return  repoi.findByUser(u1);
     }
 }

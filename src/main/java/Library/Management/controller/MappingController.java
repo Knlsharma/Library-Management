@@ -68,14 +68,10 @@ public class MappingController {
     }
 
 
-/*
-    @RequestMapping(value = "/mapbybook/{id}", method = RequestMethod.GET)
-    public List<mapping> getAllMapByBook(@PathVariable int id)
-
-    {
-        return serm.gettingAllBook(id);
-    }
 
 
- */
+
+
+
+
 }

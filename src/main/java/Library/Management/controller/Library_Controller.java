@@ -2,6 +2,7 @@ package Library.Management.controller;
 
 import Library.Management.entity.Issue;
 import Library.Management.entity.Books;
+import Library.Management.entity.mapping;
 import Library.Management.services.BookService;
 import Library.Management.services.IssueService;
 import Library.Management.services.MappingService;
@@ -12,24 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.*;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
-import org.apache.commons.collections.MultiMap;
-import org.apache.commons.collections.map.MultiValueMap;
-
-
 
 @RestController
 @RequestMapping("/library/task")
-public class Library_Controller<bg>
-{
+public class Library_Controller<bg> {
 
     @Autowired
     private UserService seru;
@@ -42,24 +33,6 @@ public class Library_Controller<bg>
 
     @Autowired
     private MappingService serm;
-
-    HashMap<String, ArrayList> hashMap = new HashMap<String, ArrayList>();
-
-    private void addValues(String key, String value)
-    {
-        ArrayList tempList = null;
-
-        if (hashMap.containsKey(key)) {
-            tempList = hashMap.get(key);
-            if(tempList == null)
-                tempList = new ArrayList();
-            tempList.add(value);
-        } else {
-            tempList = new ArrayList();
-            tempList.add(value);
-        }
-        hashMap.put(key,tempList);
-    }
 
 
     public Library_Controller(UserService seru, BookService serb, IssueService seri, MappingService serm) {
@@ -74,20 +47,25 @@ public class Library_Controller<bg>
 
     //  Using Author Name ----> Which Users have
     @RequestMapping(value = "/findauthor/{str}", method = RequestMethod.GET)
-    public TreeMap<String, Object> getAllauth(@PathVariable String str) {
+    public TreeMap<String, Set<Integer> > getAllauth(@PathVariable String str) {
 
-        List<Issue> B = serb.checkingfor(str);
+        List<Issue> B = seri.gettingAll();
 
-       System.out.println(B.get(0).getUser().getId());
+        System.out.println(B.get(0).getUser().getId());
 
+         Set<Integer> hs = new HashSet<>();
 
-        TreeMap<String, Object> tree = new TreeMap<String , Object>();
+        TreeMap<String, Set<Integer>> tree = new TreeMap<String, Set<Integer>>();
 
-        for(int i = 0 ; i < B.size() ; i++)
+        for (int i = 0; i < B.size(); i++)
         {
-            tree.put("id ", B.get(i).getUser().getId());
+            if(B.get(i).getMap().getBook().getAname().equals(str))
+            {
+                hs.add(B.get(i).getUser().getId());
+            }
 
         }
+        tree.put("id ", hs);
         return tree;
 
     /*
@@ -104,45 +82,52 @@ public class Library_Controller<bg>
     }
 
 
-
+       //   which author_name are ----> Issued / Not issued
     @RequestMapping(value = "/authorissued/{str}", method = RequestMethod.GET)
-    public Map<String, ArrayList> checkAuthStats(@PathVariable String str)
+    public Map<Integer,  List<Integer>> checkAuthStats(@PathVariable String str)
     {
 
-        List<Issue>  C =  serb.checkingfor(str);
+        TreeMap<Integer, List<Integer>> hash12 = new TreeMap<Integer, List<Integer>>();
 
-        System.out.println(C);
-        System.out.println(C.size());
+        List<Integer> al = new ArrayList<Integer>();
 
+        List<Issue> C = seri.gettingAll();
 
-
-        for(int i = 0 ; i < C.size() ; i++)
+        for(int i = 0 ; i < C.size() ; i++ )
         {
-            addValues("isbn_no", String.valueOf(C.get(i).getMap().getIs_no()));
-            addValues("status",  String.valueOf(C.get(i).isStatus()));
+            /*
+            if(C.get(i).getMap().getBook().getAname().equals(str))
+            {
+               al.add(C.get(i).getMap().getIs_no());
+                      C.get(i).isStatus();
+            }
+            NEEEDS  IMPROVEMENT
+             */
         }
 
-         System.out.println(hashMap);
 
-          return hashMap;
+          return hash12;
 
     }
 
 
     // Maths ---->  RD SHARMA ,RS AGGARWAL ,GK TIWARI
     @RequestMapping(value = "/findauthorsbook/{str}", method = RequestMethod.GET)
-    public TreeMap<String ,Object> getAllAuthSubject(@PathVariable String str)
-    {
+    public TreeMap<String, List<String>> getAllAuthSubject(@PathVariable String str) {
+        List<String> al = new ArrayList<String>();
 
         List<Books> bg = serb.findbySubjectdata(str);
 
-        TreeMap<String ,Object>  hash= new TreeMap<String ,Object>();
-
+        TreeMap<String, List<String>> hash = new TreeMap<String, List<String>>();
         System.out.println(bg);
+
         System.out.println(bg.size());
 
 
-        hash.put("Author Name",bg.get(0).getAname() );
+        for (int i = 0; i < bg.size(); i++) {
+            al.add(bg.get(i).getAname());
+        }
+        hash.put("Author Name", al);
 
 
         System.out.println(hash);
@@ -152,7 +137,62 @@ public class Library_Controller<bg>
 
     }
 
+    //  U1 ---> Names of books issued
+    @RequestMapping(value = "/userissue/{id}", method = RequestMethod.GET)
+    public TreeMap<String, List<String>> getAllauth(@PathVariable int id) {
 
+        List<Issue> B4 = seri.getOnlyUser(id);
+
+
+        TreeMap<String, List<String>> hash = new TreeMap<String, List<String>>();
+
+        System.out.println(B4.size());
+
+         List<String> al = new ArrayList<>();
+
+
+        for (int i = 0; i < B4.size(); i++) {
+            if(B4.get(i).isStatus() == true && B4.get(i).getRe_date() == null)
+            {
+                System.out.println(B4.size());
+
+                al.add(B4.get(i).getMap().getBook().getBname());
+
+            }
+        }
+        hash.put("Book Name", al);
+
+
+        return hash;
+          }
+
+
+      // Time ----> Users 1,3,2,2
+    @RequestMapping(value = "/findusebook/{str}", method = RequestMethod.GET)
+    public TreeMap<String, List<Integer>> getByBook(@PathVariable String str)
+    {
+        List<Issue> match = seri.gettingAll();
+
+
+        TreeMap<String, List<Integer>> hash = new TreeMap<String, List<Integer>>();
+
+        List<Integer> al = new ArrayList<>();
+
+        for(int i = 0 ; i < match.size() ; i++ )
+        {
+            if( match.get(i).getMap().getBook().getBname().equals(str) && match.get(i).isStatus() == true )
+            {
+                al.add(match.get(i).getUser().getId());
+
+            }
+
+        }
+        System.out.println(al.size());
+        hash.put("Issued by", al);
+
+        return hash;
+
+    }
 }
 
 
